@@ -12,7 +12,9 @@ import javax.swing.table.DefaultTableModel;
  * @author usuario
  */
 public class Tela extends javax.swing.JFrame {
-ArrayList<Pessoa> listaPessoa;
+ArrayList<PessoaFisica> listaPessoaFis;
+ArrayList<PessoaJuridica> listaPessoaJur;
+
 String tipo;
     /**
      * Creates new form Tela
@@ -20,27 +22,37 @@ String tipo;
 public void LoadTablePessoa(){
     int i;
     DefaultTableModel modelo = new DefaultTableModel(new Object[]{"Tipo:","Nome:", "Documento:", "Email:","Telefone"},0);
-    
-    for(i = 0;i<listaPessoa.size();i++){
-       String nome = listaPessoa.get(i).getNome();
-       String documento = listaPessoa.get(i).getDocumento();
-       String email = listaPessoa.get(i).getEmail();
-       String telefone = listaPessoa.get(i).getTelefone();
-           if(btn_PeFisica.isSelected()){
+    if(btn_PeFisica.isSelected()){
                tipo = "Fisica";
+               for(i = 0;i<listaPessoaFis.size();i++){
+       String nome = listaPessoaFis.get(i).getNome();
+       String documento = listaPessoaFis.get(i).getDocumento();
+       String email = listaPessoaFis.get(i).getEmail();
+       String telefone = listaPessoaFis.get(i).getTelefone();
+        modelo.addRow(new Object[]{nome,documento,email,telefone});
+        tabela_PessoaJur.setModel(modelo);
+        tabela_PessoaJur.getColumnModel();
+}
            }else{
                tipo = "Juridica";
-           }
-        modelo.addRow(new Object[]{tipo,nome,documento,email,telefone});
-        tabela_Pessoa.setModel(modelo);
-        tabela_Pessoa.getColumnModel();
+               for(i = 0;i<listaPessoaJur.size();i++){
+       String nome = listaPessoaJur.get(i).getNome();
+       String documento = listaPessoaJur.get(i).getDocumento();
+       String email = listaPessoaJur.get(i).getEmail();
+       String telefone = listaPessoaJur.get(i).getTelefone();
+        modelo.addRow(new Object[]{nome,documento,email,telefone});
+        tabela_PessoaJur.setModel(modelo);
+        tabela_PessoaJur.getColumnModel();
 }
+           }
+    
     }
 
     public Tela() {
         initComponents();
         setLocationRelativeTo(null);
-        listaPessoa = new ArrayList();
+        listaPessoaFis = new ArrayList();
+        listaPessoaJur = new ArrayList();
         btn_Pessoa_Remover.setEnabled(true);
         btn_Pessoa_Salvar.setEnabled(true);
       
@@ -67,7 +79,7 @@ public void LoadTablePessoa(){
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tabela_Pessoa = new javax.swing.JTable();
+        tabela_PessoaJur = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         lbl_Pessoa_Nome = new javax.swing.JLabel();
         lbl_Pessoa_Documento = new javax.swing.JLabel();
@@ -81,6 +93,8 @@ public void LoadTablePessoa(){
         txt_Pessoa_Telefone = new javax.swing.JTextField();
         btn_PeFisica = new javax.swing.JRadioButton();
         btn_PeJuridica = new javax.swing.JRadioButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabela_PessoaFis = new javax.swing.JTable();
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -130,19 +144,19 @@ public void LoadTablePessoa(){
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tabela_Pessoa.setModel(new javax.swing.table.DefaultTableModel(
+        tabela_PessoaJur.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Tipo:", "Nome:", "Cpf/CNPJ:", "email:", "Telefone:"
+                "Nome:", "CNPJ:", "email:", "Telefone:"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -153,12 +167,12 @@ public void LoadTablePessoa(){
                 return canEdit [columnIndex];
             }
         });
-        tabela_Pessoa.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabela_PessoaJur.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabela_PessoaMouseClicked(evt);
+                tabela_PessoaJurMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tabela_Pessoa);
+        jScrollPane2.setViewportView(tabela_PessoaJur);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados:"));
 
@@ -195,67 +209,90 @@ public void LoadTablePessoa(){
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbl_Pessoa_Nome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbl_Pessoa_Documento, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                    .addComponent(lbl_Pessoa_Email, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbl_Pessoa_Telefone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_Pessoa_Documento, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txt_Pessoa_Nome, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                .addComponent(txt_Pessoa_Telefone))
-                            .addComponent(txt_Pessoa_Email, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(56, 56, 56)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_Pessoa_Salvar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_Pessoa_Remover))))
-                .addContainerGap(24, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(btn_PeFisica)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_PeJuridica)
+                                .addComponent(lbl_Pessoa_Documento, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                .addComponent(lbl_Pessoa_Email, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lbl_Pessoa_Telefone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lbl_Pessoa_Nome, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(57, 57, 57)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_Pessoa_Telefone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txt_Pessoa_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txt_Pessoa_Documento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                                    .addComponent(txt_Pessoa_Nome, javax.swing.GroupLayout.Alignment.LEADING)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btn_PeFisica)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_PeJuridica)))
+                .addGap(66, 66, 66)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_Pessoa_Remover)
+                    .addComponent(btn_Pessoa_Salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(btn_Pessoa_Salvar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_PeFisica)
                     .addComponent(btn_PeJuridica))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_Pessoa_Nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_Pessoa_Nome))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_Pessoa_Remover)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_Pessoa_Documento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_Pessoa_Documento, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_Pessoa_Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_Pessoa_Email))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_Pessoa_Telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_Pessoa_Telefone))
-                        .addContainerGap(54, Short.MAX_VALUE))))
+                    .addComponent(lbl_Pessoa_Nome)
+                    .addComponent(btn_Pessoa_Salvar))
+                .addGap(2, 2, 2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_Pessoa_Documento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_Pessoa_Documento, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_Pessoa_Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_Pessoa_Email))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_Pessoa_Telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_Pessoa_Telefone)
+                    .addComponent(btn_Pessoa_Remover))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
+
+        tabela_PessoaFis.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tabela_PessoaFis.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nome:", "CPF:", "Email:", "Telefone:"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabela_PessoaFis.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabela_PessoaFisMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabela_PessoaFis);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -263,10 +300,13 @@ public void LoadTablePessoa(){
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,7 +314,9 @@ public void LoadTablePessoa(){
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -284,16 +326,16 @@ public void LoadTablePessoa(){
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1))
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 18, Short.MAX_VALUE))
         );
 
         pack();
@@ -301,59 +343,83 @@ public void LoadTablePessoa(){
 
     private void btn_Pessoa_SalvarActionPerformed(java.awt.event.ActionEvent evt) {                                                  
          int i = 0;
-        String nome = listaPessoa.get(i).getNome();
-        String documento = listaPessoa.get(i).getDocumento();
-        String email = listaPessoa.get(i).getEmail();
-        String telefone = listaPessoa.get(i).getTelefone();
-
-           if(btn_PeFisica.isSelected()){
+        if(btn_PeFisica.isSelected()){
                tipo = "Fisica";
+        String nome = listaPessoaFis.get(i).getNome();
+        String documento = listaPessoaFis.get(i).getDocumento();
+        String email = listaPessoaFis.get(i).getEmail();
+        String telefone = listaPessoaFis.get(i).getTelefone();
+        PessoaFisica p = new PessoaFisica(nome,documento,email,telefone);
+        txt_Pessoa_Nome.setText("");
+        txt_Pessoa_Documento.setText("");
+        txt_Pessoa_Email.setText("");
+        txt_Pessoa_Telefone.setText("");
+        listaPessoaFis.add(p);
+        LoadTablePessoa();
            }else{
                tipo = "Juridica";
+        String nome = listaPessoaJur.get(i).getNome();
+        String documento = listaPessoaJur.get(i).getDocumento();
+        String email = listaPessoaJur.get(i).getEmail();
+        String telefone = listaPessoaJur.get(i).getTelefone();
+               PessoaJuridica p = new PessoaJuridica(nome,documento,email,telefone);
+        txt_Pessoa_Nome.setText("");
+        txt_Pessoa_Documento.setText("");
+        txt_Pessoa_Email.setText("");
+        txt_Pessoa_Telefone.setText("");
+        listaPessoaJur.add(p);
+        LoadTablePessoa(); 
            }
-           if(tipo == "Juridica"){
-        PessoaJuridica p = new PessoaJuridica(nome,documento,email,telefone);
-        txt_Pessoa_Nome.setText("");
-        txt_Pessoa_Documento.setText("");
-        txt_Pessoa_Email.setText("");
-        txt_Pessoa_Telefone.setText("");
-        listaPessoa.add(p);
-        LoadTablePessoa();
-       }else{
-           PessoaFisica p = new PessoaFisica(nome,documento,email,telefone);
-        txt_Pessoa_Nome.setText("");
-        txt_Pessoa_Documento.setText("");
-        txt_Pessoa_Email.setText("");
-        txt_Pessoa_Telefone.setText("");
-        listaPessoa.add(p);
-        LoadTablePessoa();
-        
     }                                                 
 
-    }
     private void btn_Pessoa_RemoverActionPerformed(java.awt.event.ActionEvent evt) {                                                   
-        int index = tabela_Pessoa.getSelectedRow();
-        if(index >= 0 && index < listaPessoa.size()){
-          Pessoa p = listaPessoa.get(index);
-          listaPessoa.remove(index);
-        }
-        LoadTablePessoa();
+        if(btn_PeFisica.isSelected()){
+               tipo = "Fisica";
+        int index = tabela_PessoaFis.getSelectedRow();
+        if(index >= 0 && index < listaPessoaFis.size()){
+          Pessoa p = listaPessoaFis.get(index);
+          listaPessoaFis.remove(index);
+          LoadTablePessoa();
         txt_Pessoa_Nome.setText("");
         txt_Pessoa_Documento.setText("");
         txt_Pessoa_Email.setText("");
         txt_Pessoa_Telefone.setText("");
+        }else{
+            int indexx = tabela_PessoaJur.getSelectedRow();
+        if(indexx >= 0 && indexx < listaPessoaJur.size()){
+          Pessoa p = listaPessoaJur.get(indexx);
+          listaPessoaJur.remove(indexx);
+          LoadTablePessoa();
+        txt_Pessoa_Nome.setText("");
+        txt_Pessoa_Documento.setText("");
+        txt_Pessoa_Email.setText("");
+        txt_Pessoa_Telefone.setText("");
+        }
+        }
+        }
     }                                                  
 
-    private void tabela_PessoaMouseClicked(java.awt.event.MouseEvent evt) {                                           
-      int index = tabela_Pessoa.getSelectedRow();
-      if(index >= 0 && index < listaPessoa.size()){
-        Pessoa p = listaPessoa.get(index);
+    private void tabela_PessoaJurMouseClicked(java.awt.event.MouseEvent evt) {                                              
+      int index = tabela_PessoaJur.getSelectedRow();
+      if(index >= 0 && index < listaPessoaJur.size()){
+        Pessoa p = listaPessoaJur.get(index);
         txt_Pessoa_Nome.setText(p.getNome());
         txt_Pessoa_Documento.setText(p.getDocumento());
         txt_Pessoa_Email.setText(p.getEmail());
         txt_Pessoa_Telefone.setText(p.getTelefone());
       }
-    }                                          
+    }                                             
+
+    private void tabela_PessoaFisMouseClicked(java.awt.event.MouseEvent evt) {                                              
+      int index = tabela_PessoaJur.getSelectedRow();
+      if(index >= 0 && index < listaPessoaJur.size()){
+        Pessoa p = listaPessoaJur.get(index);
+        txt_Pessoa_Nome.setText(p.getNome());
+        txt_Pessoa_Documento.setText(p.getDocumento());
+        txt_Pessoa_Email.setText(p.getEmail());
+        txt_Pessoa_Telefone.setText(p.getTelefone());
+      }
+    }                                             
     /**
      * @param args the command line arguments
      */
@@ -402,6 +468,7 @@ public void LoadTablePessoa(){
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
@@ -410,7 +477,8 @@ public void LoadTablePessoa(){
     private javax.swing.JLabel lbl_Pessoa_Email;
     private javax.swing.JLabel lbl_Pessoa_Nome;
     private javax.swing.JLabel lbl_Pessoa_Telefone;
-    private javax.swing.JTable tabela_Pessoa;
+    private javax.swing.JTable tabela_PessoaFis;
+    private javax.swing.JTable tabela_PessoaJur;
     private javax.swing.JTextField txt_Pessoa_Documento;
     private javax.swing.JTextField txt_Pessoa_Email;
     private javax.swing.JTextField txt_Pessoa_Nome;
