@@ -1,8 +1,8 @@
-package classesTBB;
 public abstract class Pessoa implements Comunicavel{
     private String nome;
     private String telefone;
     private String email;
+    private String DDD;
     public Pessoa(String nome,String telefone,String email){
         this.nome = nome;
         this.telefone = telefone;
@@ -19,7 +19,12 @@ public abstract class Pessoa implements Comunicavel{
     public String getEmail(){
         return this.email;
     }
-    
+    public String getDDD(){
+        return this.DDD;
+    }
+    public void setDDD(String DDD){
+        this.DDD = DDD;
+    }
     @Override
     public boolean comunicavel (){
        if(this.telefone == ""){
@@ -33,12 +38,7 @@ public abstract class Pessoa implements Comunicavel{
     }
     public String getTelefone(){
         if(comunicavel() == true){
-            if(this.telefone.length() == 11){
-                return this.telefone;
-            }else{
-                System.out.println("Telefone Inválido");
-                return null;
-            }
+           return this.telefone; 
         }else{
             return "";
         }
@@ -50,4 +50,5 @@ public abstract class Pessoa implements Comunicavel{
     public abstract String getDocumento();
     public abstract void setDocumento(String documento);
     
-    }
+}
+
