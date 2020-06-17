@@ -1,4 +1,3 @@
-package classesTBB;
 public class PessoaFisica extends Pessoa {
     private String cpf;
     public PessoaFisica(String nome, String cpf, String telefone,String email){
@@ -7,11 +6,8 @@ public class PessoaFisica extends Pessoa {
     }
     @Override
     public String getDocumento() {
-        if(this.cpf.length() == 11){
             return this.cpf;
-        }else{
-            return "";
-        }
+        
     }
 
     @Override
@@ -19,4 +15,4 @@ public class PessoaFisica extends Pessoa {
         this.cpf = cpf;
     }
    
-    }
+}
