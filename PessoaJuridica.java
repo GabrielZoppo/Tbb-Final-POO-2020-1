@@ -1,4 +1,3 @@
-package classesTBB;
 public class PessoaJuridica extends Pessoa {
     private String cnpj;
     public PessoaJuridica(String nome, String cnpj, String telefone,String email){
@@ -8,11 +7,7 @@ public class PessoaJuridica extends Pessoa {
 
    @Override
     public String getDocumento() {
-        if(this.cnpj.length() == 14){
             return this.cnpj;
-        }else{
-            return "";
-        }
     }
 
     @Override
@@ -20,4 +15,4 @@ public class PessoaJuridica extends Pessoa {
         this.cnpj = cnpj;
     }
    
-    }
+}
